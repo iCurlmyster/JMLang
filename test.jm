@@ -1,2 +1,4 @@
 thing = "Joshua Matthews"
+str = "Hello, World!"
 println: thing
+println: str
