@@ -3,11 +3,14 @@
 
 typedef enum JMType {
 
+	JMNull = 0,
+	JMError,
 	JMString,
 	JMNum,
 	JMBool,
 	JMFunc,
-	JMAssign
+	JMAssign,
+	JMVar
 
 }JMType;
 

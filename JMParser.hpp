@@ -2,12 +2,12 @@
 #define JMPARSER_HPP
 
 #include <string>
-#include <iostream>
+#include <vector>
 #include "JMTypes.h"
 
 
 namespace JM {
-	class Parser 
+	class Parser
 	{
 
 		std::string parsedString;
@@ -16,16 +16,8 @@ namespace JM {
 		Parser();
 		~Parser();
 		JMType evaluateParse(std::string line);
-		template<typename T>
-		T returnParsedString()
-		{
-			if (currentType == JMNum)
-				return (double)parsedString;
-			if (currentType == JMBool)
-				return (bool)parsedString;
-
-			return parsedString;
-		};
+		std::vector<std::string> returnParsedString();
+		static std::vector<std::string> split(std::string line, std::string del);
 	};
 }
 
