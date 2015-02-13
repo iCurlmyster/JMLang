@@ -5,7 +5,7 @@
 
 namespace JM {
 
-        class Num : JM::Object {
+        class Num : public JM::Object {
 
 
             double currentValue;
@@ -16,7 +16,11 @@ namespace JM {
             ~Num();
 
             double getCurrentValue();
-
+            double add(JM::Num *n);
+            double sub(JM::Num *n);
+            double mul(JM::Num *n);
+            double div(JM::Num *n);
+            double mod(JM::Num *n);
 
         };
 

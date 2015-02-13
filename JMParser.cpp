@@ -38,9 +38,15 @@ JMType JM::Parser::evaluateParse(std::string line)
 		this->currentType = JMString;
 		return this->currentType;
 	}
+	if (std::regex_match(line, std::regex("-{0,1}[0-9\\.]*")))
+	{
+		std::cout<<"Number\n";
+		this->currentType = JMNum;
+		return this->currentType;
+	}
 	if (std::regex_match(line, std::regex(".*\\w+.*")))
 	{
-		//std::cout<<"JMVar regex\n";
+		std::cout<<"JMVar regex\n";
 		this->currentType = JMVar;
 		return this->currentType;
 	}
@@ -71,6 +77,12 @@ std::vector<std::string> JM::Parser::returnParsedString()
 	if (this->currentType == JMString)
 	{
 		std::regex_match(this->parsedString, sm, std::regex("\"(.*)\""));
+		splitVec.push_back(sm[1]);
+	}
+
+	if (this->currentType == JMNum)
+	{
+		std::regex_match(this->parsedString, sm, std::regex("(-{0,1}[0-9\\.]*)"));
 		splitVec.push_back(sm[1]);
 	}
 
