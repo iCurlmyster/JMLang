@@ -61,39 +61,67 @@ void JM::Interpreter::func(JM::Parser& parser)
     if (lineString[0] == "print")
     {
         JMType printType = parser.evaluateParse(lineString[1]);
-        vector<string> printVec;
+        JM::Object* temp = handleInterpret(parser,printType,lineString[1]);
 
-        if (printType == JMString) printVec = parser.returnParsedString();
-        if (printType == JMVar)
+        if (temp != NULL)
         {
-
-            vector<string> varvec = parser.returnParsedString();
-
-            JM::String* strTemp = (JM::String*)(variables[(parser.returnParsedString())[0]]);
-
-             printVec.push_back(strTemp->getCurrentValue());
+            if (temp->getCurrentType() == JMString)
+            {
+                auto tempVal = ((JM::String*)temp)->getCurrentValue();
+                print(tempVal);
+            }
+            else if (temp->getCurrentType() == JMNum)
+            {
+                auto tempVal = ((JM::Num*)temp)->getCurrentValue();
+                print(std::to_string(tempVal));
+            }
         }
-        //if (printType == JMError) { cout<<"Error on line: "<<lineNumber<<endl; printVec.push_back(""); }
-        else printVec.push_back(lineString[1]);
-         print(printVec[0]);
+        else
+        {
+            std::cout<<"Object was NULL\n";
+        }
     }
     if (lineString[0] == "println")
     {
         JMType printType = parser.evaluateParse(lineString[1]);
-        vector<std::string> printVec;
+        JM::Object* temp = handleInterpret(parser,printType,lineString[1]);
 
-        if (printType == JMString) printVec = parser.returnParsedString();
-        //else if (printType == JMError) cout<<"Error on line: "<<lineNumber<<endl;
-        else if (printType == JMVar)
+        if (temp != NULL)
         {
-
-            vector<string> varvec = parser.returnParsedString();
-
-            JM::String* strTemp = (JM::String*)(variables[(parser.returnParsedString())[0]]);
-
-            printVec.push_back(strTemp->getCurrentValue());
+            if (temp->getCurrentType() == JMString)
+            {
+                auto tempVal = ((JM::String*)temp)->getCurrentValue();
+                println(tempVal);
+            }
+            else if (temp->getCurrentType() == JMNum)
+            {
+                auto tempVal = ((JM::Num*)temp)->getCurrentValue();
+                println(std::to_string(tempVal));
+            }
         }
-        else printVec.push_back(lineString[1]);
-         println(printVec[0]);
+        else
+        {
+            std::cout<<"Object was NULL\n";
+        }
+
     }
+}
+
+JM::Object* JM::Interpreter::getVariable(string s)
+{
+    return variables[s];
+}
+
+JM::Object* JM::Interpreter::handleInterpret(JM::Parser& parser,JMType type, string line)
+{
+
+    JM::Object* temp = NULL;
+    if (type == JMString) temp = new JM::String( (parser.returnParsedString())[0] );
+    else if (type == JMNum) temp = new JM::Num((parser.returnParsedString())[0]);
+    else if (type == JMVar)
+    {
+        temp = variables[(parser.returnParsedString())[0]];
+    }
+    else temp = new JM::String("");
+    return temp;
 }

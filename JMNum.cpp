@@ -11,6 +11,12 @@ JM::Num::Num(std::string s)
     this->currentValue = std::stod (s);
 }
 
+JM::Num::Num(double d)
+{
+    this->currentType = JMNum;
+    this->currentValue = d;
+}
+
 JM::Num::~Num()
 {
 
@@ -21,23 +27,23 @@ double JM::Num::getCurrentValue()
     return this->currentValue;
 }
 
-double JM::Num::add(JM::Num *n)
+Num* JM::Num::add(JM::Num *n)
 {
-    return this->currentValue + n->getCurrentValue();
+    return new JM::Num(this->currentValue + n->getCurrentValue());
 }
-double JM::Num::sub(JM::Num *n)
+Num* JM::Num::sub(JM::Num *n)
 {
-
+    return new JM::Num(this->currentValue - n->getCurrentValue());
 }
-double JM::Num::mul(JM::Num *n)
+Num* JM::Num::mul(JM::Num *n)
 {
-
+    return new JM::Num(this->currentValue * n->getCurrentValue());
 }
-double JM::Num::div(JM::Num *n)
+Num* JM::Num::div(JM::Num *n)
 {
-
+    return new JM::Num(this->currentValue / n->getCurrentValue());
 }
-double JM::Num::mod(JM::Num *n)
+Num* JM::Num::mod(JM::Num *n)
 {
-
+    return new JM::Num(this->currentValue % n->getCurrentValue());
 }

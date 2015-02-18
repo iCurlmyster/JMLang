@@ -18,6 +18,8 @@ public:
 
 	int getScope() { return this->scope; }
 
+	JMType getCurrentType() {return this->currentType; }
+
 	void description() {
 
 		std::string t;

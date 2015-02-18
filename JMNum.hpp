@@ -13,14 +13,15 @@ namespace JM {
         public:
             Num();
             Num(std::string s);
+            Num(double d);
             ~Num();
 
             double getCurrentValue();
-            double add(JM::Num *n);
-            double sub(JM::Num *n);
-            double mul(JM::Num *n);
-            double div(JM::Num *n);
-            double mod(JM::Num *n);
+            Num* add(JM::Num *n);
+            Num* sub(JM::Num *n);
+            Num* mul(JM::Num *n);
+            Num* div(JM::Num *n);
+            Num* mod(JM::Num *n);
 
         };
 

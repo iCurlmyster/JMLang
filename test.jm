@@ -1,4 +1,5 @@
 thing = "Joshua Matthews"
-str = "Hello, World!"
+str = 4
 println: thing
 println: str
+println: 

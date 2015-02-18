@@ -9,7 +9,6 @@
 #include "JMObject.hpp"
 #include "JMParser.hpp"
 #include "JMNum.hpp"
-
 #include "JMString.hpp"
 
 
@@ -31,7 +30,12 @@ namespace JM {
          void assign(JM::Parser& parser);
          void func(JM::Parser& parser);
 
+         JM::Object* getVariable(string s);
+
+         JM::Object* handleInterpret(JM::Parser& parser,JMType type, string line);
+
     };
+
 
 };
 
