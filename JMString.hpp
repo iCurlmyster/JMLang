@@ -17,7 +17,8 @@ namespace JM {
         ~String();
         void setCurrentValue(std::string s);
         std::string getCurrentValue();
-        std::string concatenate(JM::String* obj);
+        JM::String* concatenate(JM::String* obj);
+        JM::String* concatenate(std::string s);
 
     };
 

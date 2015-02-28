@@ -1,5 +1,5 @@
 thing = "Joshua Matthews"
-str = 4
+str = " IS"
+high = " Awesome!"
+thing = thing.concat: str: high
 println: thing
-println: str
-println: 

@@ -27,7 +27,12 @@ std::string JM::String::getCurrentValue()
     return this->currentValue;
 }
 
-std::string JM::String::concatenate(JM::String* obj)
+JM::String* JM::String::concatenate(JM::String* obj)
 {
-    return this->currentValue + obj->getCurrentValue();
+    return new JM::String(this->currentValue + obj->getCurrentValue());
+}
+
+JM::String* JM::String::concatenate(std::string s)
+{
+    return new JM::String(this->currentValue + s);
 }

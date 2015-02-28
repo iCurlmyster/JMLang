@@ -26,6 +26,11 @@ JMType JM::Parser::evaluateParse(std::string line)
 		this->currentType = JMAssign;
 		return this->currentType;
 	}
+	if (std::regex_match(line, std::regex("^\\w+\\..+$")))
+	{
+		this->currentType = JMMethod;
+		return this->currentType;
+	}
 	if (std::regex_match(line,std::regex("\\w+: .*")))
 	{
 		//std::cout<<"function\n";
@@ -62,11 +67,15 @@ std::vector<std::string> JM::Parser::returnParsedString()
 	if (this->currentType == JMAssign)
 	{
 		std::regex_match(this->parsedString,sm,std::regex("(\\w+)\\s*=\\s*(.+)"));
-		for (int i = 0; i < sm.size(); i++)
-		{
-			splitVec.push_back(sm[i]);
-		}
+		splitVec.push_back(sm[1]);
+		splitVec.push_back(sm[2]);
+	}
 
+	if (this->currentType == JMMethod)
+	{
+		std::regex_match(this->parsedString, sm, std::regex("(\\w+)\\.(.+)"));
+		splitVec.push_back(sm[1]);
+		splitVec.push_back(sm[2]);
 	}
 
 	if (this->currentType == JMFunc)
@@ -106,8 +115,8 @@ std::vector<std::string> JM::Parser::split(std::string line, std::string del)
 	{
 		if(found != std::string::npos)
 		{
-			temp.push_back(line.substr(previous,found));
-			previous = found + del.size();
+			temp.push_back(line.substr(previous, found - previous));
+			previous = found + del.length();
 			found = line.find(del,previous);
 		}
 		else

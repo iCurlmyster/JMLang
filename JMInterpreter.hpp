@@ -10,7 +10,7 @@
 #include "JMParser.hpp"
 #include "JMNum.hpp"
 #include "JMString.hpp"
-
+#include "JMStringFunc.hpp"
 
 using namespace std;
 
@@ -19,6 +19,7 @@ namespace JM {
     class Interpreter {
 
         map<string, JM::Object*> variables;
+        JM::MethodCall methodCalls;
 
     public:
 
@@ -29,10 +30,11 @@ namespace JM {
 
          void assign(JM::Parser& parser);
          void func(JM::Parser& parser);
+         JM::Object* method(JM::Parser& parser);
 
          JM::Object* getVariable(string s);
 
-         JM::Object* handleInterpret(JM::Parser& parser,JMType type, string line);
+         JM::Object* handleInterpret(JM::Parser& parser,JMType type);
 
     };
 

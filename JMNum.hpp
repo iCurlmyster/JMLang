@@ -17,11 +17,10 @@ namespace JM {
             ~Num();
 
             double getCurrentValue();
-            Num* add(JM::Num *n);
-            Num* sub(JM::Num *n);
-            Num* mul(JM::Num *n);
-            Num* div(JM::Num *n);
-            Num* mod(JM::Num *n);
+            JM::Num* add(JM::Num *n);
+            JM::Num* sub(JM::Num *n);
+            JM::Num* mul(JM::Num *n);
+            JM::Num* div(JM::Num *n);
 
         };
 
