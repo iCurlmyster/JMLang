@@ -13,7 +13,7 @@ JM::MethodCall::~MethodCall() {
 JM::Object* JM::MethodCall::evaluateStringMethod(JM::String* obj, std::string function, std::vector<JM::Object*> params)
 {
 
-    if (function == "concat")
+    if (function == "concat" || function == "append")
     {
 
         std::string temp;
