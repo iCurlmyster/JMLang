@@ -39,7 +39,7 @@ JM::Object* JM::MethodCall::evaluateStringMethod(JM::String* obj, std::string fu
 JM::Object* JM::MethodCall::evaluateNumMethod(JM::Num* obj, std::string function, std::vector<JM::Object*> params)
 {
 
-    if (function == "add")
+    if (function == "add" || function == "+")
     {
         double temp = obj->getCurrentValue();
         for (int i = 0; i < params.size(); i++)
@@ -50,7 +50,7 @@ JM::Object* JM::MethodCall::evaluateNumMethod(JM::Num* obj, std::string function
         return new JM::Num(temp);
 
     }
-    else if (function == "sub")
+    else if (function == "sub" || function == "-")
     {
         double temp = obj->getCurrentValue();
         for (int i = 0; i < params.size(); i++)
@@ -60,7 +60,7 @@ JM::Object* JM::MethodCall::evaluateNumMethod(JM::Num* obj, std::string function
         }
         return new JM::Num(temp);
     }
-    else if (function == "mul")
+    else if (function == "mul" || function == "*")
     {
         double temp = obj->getCurrentValue();
         for (int i = 0; i < params.size(); i++)
@@ -70,7 +70,7 @@ JM::Object* JM::MethodCall::evaluateNumMethod(JM::Num* obj, std::string function
         }
         return new JM::Num(temp);
     }
-    else if (function == "div")
+    else if (function == "div" || function == "/")
     {
         double temp = obj->getCurrentValue();
         for (int i = 0; i < params.size(); i++)

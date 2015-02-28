@@ -1,14 +1,14 @@
 thing = "Joshua Matthews"
 str = " IS"
 high = " Awesome!"
-thing = thing.concat: str: high
+thing = thing.append: str: high
 println: thing
 
-len = thing.length: 
+len = thing.length: |
 println: len
 
 num1 = 4
 num2 = 6
 num3 = 10
-num1 = num1.div: num2: num3
+num1 = num1.+: num2: num3
 println: num1

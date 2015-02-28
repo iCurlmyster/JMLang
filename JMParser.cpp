@@ -17,12 +17,6 @@ JMType JM::Parser::evaluateParse(std::string line)
 	this->parsedString = line;
 	if (std::regex_match(line,std::regex(".+=.+")))
 	{
-
-		// if (this->currentType == JMFunc) {
-		// 	std::cout<<"\ncannot use '=' operator in functions call\n";
-		// 	return JMError;
-		// }
-		//std::cout<<"assign\n";
 		this->currentType = JMAssign;
 		return this->currentType;
 	}
@@ -31,7 +25,7 @@ JMType JM::Parser::evaluateParse(std::string line)
 		this->currentType = JMMethod;
 		return this->currentType;
 	}
-	if (std::regex_match(line,std::regex("\\w+: .*")))
+	if (std::regex_match(line,std::regex("[\\w|\\-|\\+|\\*|/]+: .*")))
 	{
 		//std::cout<<"function\n";
 		this->currentType = JMFunc;
@@ -66,7 +60,7 @@ std::vector<std::string> JM::Parser::returnParsedString()
 	std::vector<std::string> splitVec;
 	if (this->currentType == JMAssign)
 	{
-		std::regex_match(this->parsedString,sm,std::regex("(\\w+)\\s*=\\s*(.+)"));
+		std::regex_match(this->parsedString,sm,std::regex("([a-z]\\w+)\\s*=\\s*(.+)"));
 		splitVec.push_back(sm[1]);
 		splitVec.push_back(sm[2]);
 	}
