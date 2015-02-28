@@ -22,7 +22,8 @@ int main(int argc, const char * argv[])
 			smatch matches;
 			getline(f,line);
 			JMType parseType = parserObject.evaluateParse(line);
-			interpObj.interpret(parserObject,parseType);
+			if (parseType != JMNull)
+				interpObj.interpret(parserObject,parseType);
 		}
 		f.close();
 	}

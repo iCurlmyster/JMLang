@@ -15,35 +15,39 @@ JM::Parser::~Parser()
 JMType JM::Parser::evaluateParse(std::string line)
 {
 	this->parsedString = line;
-	if (std::regex_match(line,std::regex(".+=.+")))
+	if (std::regex_match(line,std::regex("\\s*//.*")))
+	{
+		return JMNull;
+	}
+	else if (std::regex_match(line,std::regex(".+=.+")))
 	{
 		this->currentType = JMAssign;
 		return this->currentType;
 	}
-	if (std::regex_match(line, std::regex("-{0,1}[0-9\\.]+")))
+	else if (std::regex_match(line, std::regex("-{0,1}[0-9]+\\.{0,1}[0-9]*")))
 	{
 		//std::cout<<"Number\n";
 		this->currentType = JMNum;
 		return this->currentType;
 	}
-	if (std::regex_match(line, std::regex("^\\w+\\..+$")))
+	else if (std::regex_match(line, std::regex("^\"{0,1}.+\"{0,1}\\..+$")))
 	{
 		this->currentType = JMMethod;
 		return this->currentType;
 	}
-	if (std::regex_match(line,std::regex("[\\w|\\-|\\+|\\*|/]+: .*")))
+	else if (std::regex_match(line,std::regex("[\\w|\\-|\\+|\\*|/]+: .*")))
 	{
 		//std::cout<<"function\n";
 		this->currentType = JMFunc;
 		return this->currentType;
 	}
-	if (std::regex_match(line, std::regex(".*\".*\".*")))
+	else if (std::regex_match(line, std::regex("\\s*\"[^\"|.]*\"\\s*")))
 	{
 		//std::cout<<"String\n";
 		this->currentType = JMString;
 		return this->currentType;
 	}
-	if (std::regex_match(line, std::regex(".*\\w+.*")))
+	else if (std::regex_match(line, std::regex(".*\\w+.*")))
 	{
 		//std::cout<<"JMVar regex\n";
 		this->currentType = JMVar;
@@ -67,7 +71,7 @@ std::vector<std::string> JM::Parser::returnParsedString()
 
 	if (this->currentType == JMMethod)
 	{
-		std::regex_match(this->parsedString, sm, std::regex("(\\w+)\\.(.+)"));
+		std::regex_match(this->parsedString, sm, std::regex("(\"{0,1}.+\"{0,1})\\.(.+)"));
 		splitVec.push_back(sm[1]);
 		splitVec.push_back(sm[2]);
 	}

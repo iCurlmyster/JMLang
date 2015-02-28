@@ -1,14 +1,17 @@
-thing = "Joshua Matthews"
-str = " IS"
-high = " Awesome!"
-thing = thing.append: str: high
+thing = "Joshua "
+str = "Matthews "
+last = "is Awesome!"
+thing = "thing  ".append: "str ": "last"
 println: thing
 
 len = thing.length: |
 println: len
 
-num1 = 4.56985
-num2 = 6
-num3 = 10
-num1 = num1.+: num2: num3
+obj = thing.class: |
+println: obj
+
+//num1 = -4.56985
+//num2 = 6
+//num3 = 10
+num1 = 4.5.+: 3: 3
 println: num1

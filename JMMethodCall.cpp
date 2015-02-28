@@ -10,6 +10,14 @@ JM::MethodCall::~MethodCall() {
 
 }
 
+
+/**
+* Method to handle String object's methods.
+* @param obj (JM::String*)
+* @param function (std::string)
+* @param params (std::vector<JM::Object*>)
+* @return JM::Object*
+*/
 JM::Object* JM::MethodCall::evaluateStringMethod(JM::String* obj, std::string function, std::vector<JM::Object*> params)
 {
 
@@ -32,10 +40,25 @@ JM::Object* JM::MethodCall::evaluateStringMethod(JM::String* obj, std::string fu
     {
         return new JM::Num( (obj->getCurrentValue()).length() );
     }
+    else if (function == "class")
+    {
+        return new JM::String("JMString");
+    }
+    else
+    {
+        std::cout<<"Not a method of the String class"<<std::endl;
+    }
 
     return NULL;
 }
 
+/**
+* Method to handle Num object's methods.
+* @param obj (JM::Num*)
+* @param function (std::string)
+* @param params (std::vector<JM::Object*>)
+* @return JM::Object*
+*/
 JM::Object* JM::MethodCall::evaluateNumMethod(JM::Num* obj, std::string function, std::vector<JM::Object*> params)
 {
 
@@ -79,6 +102,14 @@ JM::Object* JM::MethodCall::evaluateNumMethod(JM::Num* obj, std::string function
                 temp /= ((JM::Num*)params[i])->getCurrentValue();
         }
         return new JM::Num(temp);
+    }
+    else if (function == "class")
+    {
+        return new JM::String("JMNum");
+    }
+    else
+    {
+        std::cout<<"Not a method of the Num class"<<std::endl;
     }
 
     return NULL;

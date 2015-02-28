@@ -143,8 +143,13 @@ void JM::Interpreter::func(JM::Parser& parser)
 }
 
 /**
-* This method handles method calls.
+* This method handles method calls. It figures out the type of the calling object
+* and acts accordingly, evaluating all of the method's parameters and then passes the information
+* to the JMMethodCall class to handle what type of object method it is and the parameters that
+* are passed to it. Once JMMethodCall handles the method it returns an object and then this
+* method returns that returned object. Cannot handle method within method calling yet.
 * @param &parser (JM::Parser)
+* @return JM::Object*
 */
 JM::Object* JM::Interpreter::method(JM::Parser& parser)
 {
@@ -172,7 +177,8 @@ JM::Object* JM::Interpreter::method(JM::Parser& parser)
                 {
                     JMType paramType = parser.evaluateParse(funcString[i]);
                     auto paramObject = this->handleInterpret(parser, paramType);
-                    parameters.push_back(paramObject);
+                    if (paramObject != NULL)
+                        parameters.push_back(paramObject);
                 }
 
                 return methodCalls.evaluateStringMethod(tempVar, theFunction, parameters);
@@ -198,7 +204,8 @@ JM::Object* JM::Interpreter::method(JM::Parser& parser)
                 {
                     JMType paramType = parser.evaluateParse(funcString[i]);
                     auto paramObject = this->handleInterpret(parser, paramType);
-                    parameters.push_back(paramObject);
+                    if (paramObject != NULL)
+                        parameters.push_back(paramObject);
                 }
 
                 return methodCalls.evaluateNumMethod(tempVar, theFunction, parameters);
@@ -210,13 +217,63 @@ JM::Object* JM::Interpreter::method(JM::Parser& parser)
         }
     }
 
+    if (callerType == JMString)
+    {
+        JM::String * tempVar = (JM::String*)this->handleInterpret(parser, callerType);
+        JMType funcType = parser.evaluateParse(lineString[1]);
+        if (funcType == JMFunc) {
+
+            string theFunction;
+            vector<string> funcString = parser.returnParsedString();
+            vector<JM::Object*> parameters;
+
+            theFunction = funcString[0];
+
+            for (int i = 1; i < funcString.size(); i++)
+            {
+                JMType paramType = parser.evaluateParse(funcString[i]);
+                auto paramObject = this->handleInterpret(parser, paramType);
+                if (paramObject != NULL)
+                    parameters.push_back(paramObject);
+            }
+
+            return methodCalls.evaluateStringMethod(tempVar, theFunction, parameters);
+        }
+        else
+        {
+            std::cout<<"Method not properly called.\n";
+        }
+    }
+    else if (callerType == JMNum)
+    {
+        JM::Num * tempVar = (JM::Num*)this->handleInterpret(parser, callerType);
+        JMType funcType = parser.evaluateParse(lineString[1]);
+        if (funcType == JMFunc) {
+
+            string theFunction;
+            vector<string> funcString = parser.returnParsedString();
+            vector<JM::Object*> parameters;
+
+            theFunction = funcString[0];
+
+            for (int i = 1; i < funcString.size(); i++)
+            {
+                JMType paramType = parser.evaluateParse(funcString[i]);
+                auto paramObject = this->handleInterpret(parser, paramType);
+                if (paramObject != NULL)
+                    parameters.push_back(paramObject);
+            }
+
+            return methodCalls.evaluateNumMethod(tempVar, theFunction, parameters);
+        }
+        else
+        {
+            std::cout<<"Method not properly called.\n";
+        }
+    }
+
     return NULL;
 
-}
-
-JM::Object* JM::Interpreter::getVariable(string s)
-{
-    return variables[s];
 }
 
 /**

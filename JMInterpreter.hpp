@@ -18,7 +18,16 @@ namespace JM {
 
     class Interpreter {
 
+        /**
+        * Map to hold variables that are created.
+        * Key: std::string
+        * Value: JM::Object*
+        */
         map<string, JM::Object*> variables;
+
+        /**
+        * MethodCall object to handle method calling
+        */
         JM::MethodCall methodCalls;
 
     public:
@@ -31,8 +40,6 @@ namespace JM {
          void assign(JM::Parser& parser);
          void func(JM::Parser& parser);
          JM::Object* method(JM::Parser& parser);
-
-         JM::Object* getVariable(string s);
 
          JM::Object* handleInterpret(JM::Parser& parser,JMType type);
 
