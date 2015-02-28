@@ -10,7 +10,7 @@
 #include "JMParser.hpp"
 #include "JMNum.hpp"
 #include "JMString.hpp"
-#include "JMStringFunc.hpp"
+#include "JMMethodCall.hpp"
 
 using namespace std;
 

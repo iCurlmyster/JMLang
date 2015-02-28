@@ -14,8 +14,8 @@ namespace JM {
     public:
         MethodCall();
         ~MethodCall();
-        JM::String* evaluateStringMethod(JM::String* obj, std::string function, std::vector<JM::Object*> params);
-        JM::Num* evaluateNumMethod(JM::Object* obj, std::string function, std::vector<JM::Object*> params);
+        JM::Object* evaluateStringMethod(JM::String* obj, std::string function, std::vector<JM::Object*> params);
+        JM::Object* evaluateNumMethod(JM::Num* obj, std::string function, std::vector<JM::Object*> params);
 
     };
 

@@ -4,7 +4,7 @@ TARGET=jm
 
 ATTR=-std=c++11
 
-OBJECTS=jm.o JMParser.o JMString.o JMNum.o JMInterpreter.o JMStringFunc.o
+OBJECTS=jm.o JMParser.o JMString.o JMNum.o JMInterpreter.o JMMethodCall.o
 
 all: $(TARGET)
 
@@ -20,7 +20,7 @@ JMNum.o: JMNum.cpp
 	$(CC) $(CFLAGS) $(ATTR) JMNum.cpp
 JMInterpreter.o: JMInterpreter.cpp
 	$(CC) $(CFLAGS) $(ATTR) JMInterpreter.cpp
-JMStringFunc.o: JMStringFunc.cpp
-	$(CC) $(CFLAGS) $(ATTR) JMStringFunc.cpp
+JMMethodCall.o: JMMethodCall.cpp
+	$(CC) $(CFLAGS) $(ATTR) JMMethodCall.cpp
 clean:
 	rm -Rf *.o $(TARGET)

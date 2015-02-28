@@ -68,7 +68,10 @@ void JM::Interpreter::assign(JM::Parser& parser)
         else if (assignType == JMMethod)
         {
             auto var = this->method(parser);
-            variables[lineString[0]] = var;
+            if (var != NULL)
+                variables[lineString[0]] = var;
+            else
+                std::cout<<"Error with method call for assignment to "<<lineString[0]<<std::endl;
         }
         else {
             cout<<"Not assignable.\n";
@@ -152,7 +155,7 @@ JM::Object* JM::Interpreter::method(JM::Parser& parser)
     {
         auto var = this->handleInterpret(parser,JMVar);
         JMType varType = var->getCurrentType();
-        
+
         if (varType == JMString)
         {
             JM::String * tempVar = (JM::String*)var;
@@ -174,7 +177,10 @@ JM::Object* JM::Interpreter::method(JM::Parser& parser)
 
                 return methodCalls.evaluateStringMethod(tempVar, theFunction, parameters);
             }
-
+            else
+            {
+                std::cout<<"Method not properly called.\n";
+            }
         }
         else if (varType == JMNum)
         {
@@ -195,7 +201,11 @@ JM::Object* JM::Interpreter::method(JM::Parser& parser)
                     parameters.push_back(paramObject);
                 }
 
-                //return stringFunctions.evaluateMethod(var, theFunction, parameters);
+                return methodCalls.evaluateNumMethod(tempVar, theFunction, parameters);
+            }
+            else
+            {
+                std::cout<<"Method not properly called.\n";
             }
         }
     }

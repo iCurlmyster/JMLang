@@ -27,19 +27,19 @@ double JM::Num::getCurrentValue()
     return this->currentValue;
 }
 
-JM::Num* JM::Num::add(JM::Num *n)
+JM::Num* JM::Num::add(double d)
 {
-    return new JM::Num(this->currentValue + n->getCurrentValue());
+    return new JM::Num(this->currentValue + d);
 }
-JM::Num* JM::Num::sub(JM::Num *n)
+JM::Num* JM::Num::sub(double d)
 {
-    return new JM::Num(this->currentValue - n->getCurrentValue());
+    return new JM::Num(this->currentValue - d);
 }
-JM::Num* JM::Num::mul(JM::Num *n)
+JM::Num* JM::Num::mul(double d)
 {
-    return new JM::Num(this->currentValue * n->getCurrentValue());
+    return new JM::Num(this->currentValue * d);
 }
-JM::Num* JM::Num::div(JM::Num *n)
+JM::Num* JM::Num::div(double d)
 {
-    return new JM::Num(this->currentValue / n->getCurrentValue());
+    return new JM::Num(this->currentValue / d);
 }
