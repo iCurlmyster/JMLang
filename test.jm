@@ -7,7 +7,7 @@ println: thing
 len = thing.length: |
 println: len
 
-num1 = 4
+num1 = 4.56985
 num2 = 6
 num3 = 10
 num1 = num1.+: num2: num3

@@ -20,6 +20,12 @@ JMType JM::Parser::evaluateParse(std::string line)
 		this->currentType = JMAssign;
 		return this->currentType;
 	}
+	if (std::regex_match(line, std::regex("-{0,1}[0-9\\.]+")))
+	{
+		//std::cout<<"Number\n";
+		this->currentType = JMNum;
+		return this->currentType;
+	}
 	if (std::regex_match(line, std::regex("^\\w+\\..+$")))
 	{
 		this->currentType = JMMethod;
@@ -35,12 +41,6 @@ JMType JM::Parser::evaluateParse(std::string line)
 	{
 		//std::cout<<"String\n";
 		this->currentType = JMString;
-		return this->currentType;
-	}
-	if (std::regex_match(line, std::regex("-{0,1}[0-9\\.]+")))
-	{
-		//std::cout<<"Number\n";
-		this->currentType = JMNum;
 		return this->currentType;
 	}
 	if (std::regex_match(line, std::regex(".*\\w+.*")))
