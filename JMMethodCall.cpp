@@ -18,7 +18,7 @@ JM::MethodCall::~MethodCall() {
 * @param params (std::vector<JM::Object*>)
 * @return JM::Object*
 */
-JM::Object* JM::MethodCall::evaluateStringMethod(JM::String* obj, std::string function, std::vector<JM::Object*> params)
+JM::Object* JM::MethodCall::evaluateStringMethod(JM::String* obj, std::string function, std::vector<JM::Object*>& params)
 {
 
     if (function == "concat" || function == "append")
@@ -59,7 +59,7 @@ JM::Object* JM::MethodCall::evaluateStringMethod(JM::String* obj, std::string fu
 * @param params (std::vector<JM::Object*>)
 * @return JM::Object*
 */
-JM::Object* JM::MethodCall::evaluateNumMethod(JM::Num* obj, std::string function, std::vector<JM::Object*> params)
+JM::Object* JM::MethodCall::evaluateNumMethod(JM::Num* obj, std::string function, std::vector<JM::Object*>& params)
 {
 
     if (function == "add" || function == "+")

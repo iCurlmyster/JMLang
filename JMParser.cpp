@@ -19,6 +19,11 @@ JMType JM::Parser::evaluateParse(std::string line)
 	{
 		return JMNull;
 	}
+	else if (std::regex_match(line, std::regex(".*\\(.+\\).*")))
+	{
+		this->currentType = JMOperation;
+		return JMOperation;
+	}
 	else if (std::regex_match(line,std::regex(".+=.+")))
 	{
 		this->currentType = JMAssign;
