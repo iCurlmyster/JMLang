@@ -2,7 +2,6 @@
 #define JMFUNCTIONS_HPP
 
 #include <string>
-#include <vector>
 #include <iostream>
 
 void print(std::string line)

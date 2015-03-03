@@ -15,15 +15,20 @@ int main(int argc, const char * argv[])
 		JM::Parser parserObject;
 		JM::Interpreter interpObj;
 		string line;
+		bool isAnError = false;
 		ifstream f(argv[1]);
 		while (!f.eof())
 		{
+			isAnError = false;
 			++lineNumber;
 			smatch matches;
 			getline(f,line);
 			JMType parseType = parserObject.evaluateParse(line);
 			if (parseType != JMNull)
 				interpObj.interpret(parserObject,parseType);
+			if (isAnError)
+				cout<<"ERROR on line: "<<lineNumber<<endl;
+		
 		}
 		f.close();
 	}
