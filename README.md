@@ -14,7 +14,7 @@ The string objects support:
 `concat:`
 `append:`
 `length:`
-`class`
+`class:`
 
 the number objects support:
 `add:`
