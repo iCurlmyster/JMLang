@@ -3,7 +3,6 @@
 
 #include "JMTypes.h"
 #include <iostream>
-#include <string>
 
 namespace JM {
 class Object {
