@@ -20,40 +20,6 @@ public:
 
 	JMType getCurrentType() {return this->currentType; }
 
-	void description() {
-
-		std::string t;
-		switch(this->currentType) {
-
-			case JMNull:
-				t = "JMNull";
-				break;
-			case JMError:
-				t = "JMError";
-				break;
-			case JMString:
-				t = "JMString";
-				break;
-			case JMNum:
-				t = "JMNum";
-				break;
-			case JMBool:
-				t = "JMBool";
-				break;
-			case JMFunc:
-				t = "JMFunc";
-				break;
-			case JMAssign:
-				t = "JMAssign";
-				break;
-			case JMVar:
-				break;
-			default:
-				break;
-		}
-
-		std::cout<<"Object: "<<t<<std::endl;
-		}
 };
 };
 
