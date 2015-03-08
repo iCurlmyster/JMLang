@@ -4,12 +4,15 @@
 #include "JMObject.hpp"
 #include "JMString.hpp"
 #include "JMNum.hpp"
+#include "FileManager.hpp"
 #include <vector>
 #include <string>
 
 namespace JM {
 
     class MethodCall {
+
+        FileManager manager;
 
     public:
         MethodCall();

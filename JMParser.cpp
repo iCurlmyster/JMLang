@@ -2,6 +2,14 @@
 #include <regex>
 #include <iostream>
 
+
+/**
+
+	Change function to instead split arguments by ', ' rather than ': '
+	so it will be easier to call methods within methods.
+
+*/
+
 JM::Parser::Parser()
 {
 
@@ -24,7 +32,7 @@ JMType JM::Parser::evaluateParse(std::string line)
 		this->currentType = JMOperation;
 		return JMOperation;
 	}
-	else if (std::regex_match(line,std::regex(".+=.+")))
+	else if (std::regex_match(line,std::regex(".+\\s+=\\s+.+")))
 	{
 		this->currentType = JMAssign;
 		return this->currentType;
@@ -35,8 +43,15 @@ JMType JM::Parser::evaluateParse(std::string line)
 		this->currentType = JMNum;
 		return this->currentType;
 	}
-	else if (std::regex_match(line, std::regex("^\"{0,1}.+\"{0,1}\\..+$")))
+	else if (std::regex_match(line, std::regex("\\s*\"[^\"]*\"\\s*")))
 	{
+		//std::cout<<"String\n";
+		this->currentType = JMString;
+		return this->currentType;
+	}
+	else if (std::regex_match(line, std::regex("^\"{0,1}.+\"{0,1}\\.[\\w|\\-|\\+|\\*|/]+: .+$")))
+	{
+		//std::cout<<"Calling method in parser\n";
 		this->currentType = JMMethod;
 		return this->currentType;
 	}
@@ -44,12 +59,6 @@ JMType JM::Parser::evaluateParse(std::string line)
 	{
 		//std::cout<<"function\n";
 		this->currentType = JMFunc;
-		return this->currentType;
-	}
-	else if (std::regex_match(line, std::regex("\\s*\"[^\"|.]*\"\\s*")))
-	{
-		//std::cout<<"String\n";
-		this->currentType = JMString;
 		return this->currentType;
 	}
 	else if (std::regex_match(line, std::regex(".*\\w+.*")))
@@ -69,14 +78,14 @@ std::vector<std::string> JM::Parser::returnParsedString()
 	std::vector<std::string> splitVec;
 	if (this->currentType == JMAssign)
 	{
-		std::regex_match(this->parsedString,sm,std::regex("([a-z]\\w+)\\s*=\\s*(.+)"));
+		std::regex_match(this->parsedString,sm,std::regex("([a-z]\\w+)\\s+=\\s+(.+)"));
 		splitVec.push_back(sm[1]);
 		splitVec.push_back(sm[2]);
 	}
 
 	if (this->currentType == JMMethod)
 	{
-		std::regex_match(this->parsedString, sm, std::regex("(\"{0,1}.+\"{0,1})\\.(.+)"));
+		std::regex_match(this->parsedString, sm, std::regex("^(\"{0,1}.+\"{0,1})\\.([\\w|\\+|\\-|\\*|/]+: .+)$"));
 		splitVec.push_back(sm[1]);
 		splitVec.push_back(sm[2]);
 	}

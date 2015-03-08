@@ -93,6 +93,7 @@ void JM::Interpreter::assign(JM::Parser& parser)
 void JM::Interpreter::func(JM::Parser& parser)
 {
     vector<string> lineString = parser.returnParsedString();
+    if (lineString.size() == 0) {std::cout<< "Function not properly set.\n"; return; }
     if (lineString[0] == "print")
     {
         JMType printType = parser.evaluateParse(lineString[1]);
@@ -155,6 +156,7 @@ JM::Object* JM::Interpreter::method(JM::Parser& parser)
 {
 
     vector<string> lineString = parser.returnParsedString();
+    if (lineString.size() == 0) {std::cout<<"Method was not called properly.\n"; return NULL; }
     JMType callerType = parser.evaluateParse(lineString[0]);
     if (callerType == JMVar)
     {

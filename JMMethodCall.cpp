@@ -44,6 +44,19 @@ JM::Object* JM::MethodCall::evaluateStringMethod(JM::String* obj, std::string fu
     {
         return new JM::String("JMString");
     }
+    else if (function == "writeToFile")
+    {
+        if (params[0]->getCurrentType() == JMString){
+            if (params[0] != NULL && obj != NULL){
+	       this->manager.writeToFile(((JM::String*)params[0])->getCurrentValue(), obj->getCurrentValue());
+            }
+            else {
+                std::cout<<"Either params or object was NULL for writeToFile\n";
+            }
+       }
+        else
+           std::cout<<"Not a proper file named passed as argument.\n";
+    }
     else
     {
         std::cout<<"Not a method of the String class"<<std::endl;
