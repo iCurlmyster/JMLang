@@ -1,1 +1,2 @@
-println: "Hello World"
+arr = [1, "josh"]
+println: arr

@@ -1,7 +1,7 @@
 #include "JMParser.hpp"
 #include <regex>
 #include <iostream>
-
+#include "JMArray.hpp"
 
 /**
 
@@ -35,6 +35,11 @@ JMType JM::Parser::evaluateParse(std::string line)
 	else if (std::regex_match(line,std::regex(".+\\s+=\\s+.+")))
 	{
 		this->currentType = JMAssign;
+		return this->currentType;
+	}
+	else if (std::regex_match(line, std:: regex("\\s*\\[.*\\]\\s*")))
+	{
+		this->currentType = JMArray;
 		return this->currentType;
 	}
 	else if (std::regex_match(line, std::regex("-{0,1}[0-9]+\\.{0,1}[0-9]*")))
@@ -109,9 +114,13 @@ std::vector<std::string> JM::Parser::returnParsedString()
 
 	if (this->currentType == JMVar)
 	{
-
 		std::regex_match(this->parsedString,sm,std::regex("\\s*(\\w+)\\s*"));
 		splitVec.push_back(sm[1]);
+	}
+	if (this->currentType == JMArray)
+	{
+		std::regex_match(this->parsedString, sm, std::regex("\\s*\\[(.*)\\]\\s*"));
+		splitVec = JM::Parser::split(sm[1],", ");
 	}
 
 	return splitVec;

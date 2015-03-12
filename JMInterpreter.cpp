@@ -1,6 +1,6 @@
 #include "JMInterpreter.hpp"
 #include "JMGlobalFunctions.h"
-
+#include "JMArray.hpp"
 
 JM::Interpreter::Interpreter()
 {
@@ -73,6 +73,17 @@ void JM::Interpreter::assign(JM::Parser& parser)
             else
                 std::cout<<"Error with method call for assignment to "<<lineString[0]<<std::endl;
         }
+	else if (assignType == JMArray)
+	{
+		vector<string> printVec = parser.returnParsedString();
+		vector<JM::Object*> objVec;
+		for (int i = 0; i < printVec.size(); i++)
+		{
+			JMType i_type = parser.evaluateParse(printVec[i]);
+			objVec.push_back( this->handleInterpret(parser, i_type) );
+		}
+		variables[lineString[0]] = new JM::Array(objVec);
+	}
         else {
             cout<<"Not assignable.\n";
         }
@@ -111,6 +122,11 @@ void JM::Interpreter::func(JM::Parser& parser)
                 auto tempVal = ((JM::Num*)temp)->getCurrentValue();
                 print(std::to_string(tempVal));
             }
+	    else if (temp->getCurrentType() == JMArray)
+	    {
+		auto tempVal = ((JM::Array*)temp)->getCurrentValue();
+		print(tempVal);
+            }
         }
         else
         {
@@ -134,6 +150,12 @@ void JM::Interpreter::func(JM::Parser& parser)
                 auto tempVal = ((JM::Num*)temp)->getCurrentValue();
                 println(std::to_string(tempVal));
             }
+	    else if (temp->getCurrentType() == JMArray)
+	    {
+		auto tempVal = ((JM::Array*)temp)->getCurrentValue();
+		println(tempVal);
+            }
+
         }
         else
         {
