@@ -4,7 +4,7 @@ TARGET=jm
 
 ATTR=-std=c++11
 
-OBJECTS=jm.o JMParser.o JMString.o JMNum.o JMInterpreter.o JMMethodCall.o FileManager.o JMArray.o
+OBJECTS=jm.o JMObject.o JMParser.o JMString.o JMNum.o JMInterpreter.o JMMethodCall.o FileManager.o JMArray.o
 
 all: $(TARGET)
 
@@ -12,6 +12,8 @@ $(TARGET): $(OBJECTS)
 	$(CC) $(ATTR) $(OBJECTS) -o $(TARGET)
 jm.o: jm.cpp
 	$(CC) $(CFLAGS) $(ATTR) jm.cpp
+JMObject.o: JMObject.cpp
+	$(CC) $(CFLAGS) $(ATTR) JMObject.cpp
 JMParser.o: JMParser.cpp
 	$(CC) $(CFLAGS) $(ATTR) JMParser.cpp
 JMString.o: JMString.cpp

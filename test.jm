@@ -1,19 +1,25 @@
-//thing = "Joshua "
-//str = "Matthews "
-//last = "is Awesome!"
+thing = "Joshua "
+str = "Matthews "
+last = "is Awesome!"
 thing = "Joshua  ".append: "Matthews is ": "awesome!"
-//println: thing
+println: thing
 
 thing.writeToFile: "Test.txt"
 
-//len = thing.length: |
-//println: len
+len = thing.length: |
+println: len
 
-//obj = thing.class: |
-//println: obj
+obj = thing.class: |
+println: obj
 
-//num1 = -4.56985
-//num2 = 6
-//num3 = 10
-//num1 = 4.5.+: 3: 3
-//println: num1
+num1 = -4.56985
+num2 = 6
+num3 = 10
+num1 = 4.5.+: 3: 3
+println: num1
+
+arr = [1, "josh"]
+arr.append: 4: "Tiffany"
+num = arr.at: 3
+println: arr
+println: num

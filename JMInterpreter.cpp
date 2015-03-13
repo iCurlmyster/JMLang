@@ -122,10 +122,10 @@ void JM::Interpreter::func(JM::Parser& parser)
                 auto tempVal = ((JM::Num*)temp)->getCurrentValue();
                 print(std::to_string(tempVal));
             }
-	    else if (temp->getCurrentType() == JMArray)
-	    {
-		auto tempVal = ((JM::Array*)temp)->getCurrentValue();
-		print(tempVal);
+	        else if (temp->getCurrentType() == JMArray)
+	        {
+		        auto tempVal = ((JM::Array*)temp)->getCurrentValue();
+		        print(tempVal);
             }
         }
         else
@@ -150,10 +150,10 @@ void JM::Interpreter::func(JM::Parser& parser)
                 auto tempVal = ((JM::Num*)temp)->getCurrentValue();
                 println(std::to_string(tempVal));
             }
-	    else if (temp->getCurrentType() == JMArray)
-	    {
-		auto tempVal = ((JM::Array*)temp)->getCurrentValue();
-		println(tempVal);
+	        else if (temp->getCurrentType() == JMArray)
+	        {
+		        auto tempVal = ((JM::Array*)temp)->getCurrentValue();
+		        println(tempVal);
             }
 
         }
@@ -239,6 +239,33 @@ JM::Object* JM::Interpreter::method(JM::Parser& parser)
                 std::cout<<"Method not properly called.\n";
             }
         }
+	   else if (varType == JMArray)
+	   {
+           auto tempVar = (JM::Array*)var;
+           JMType funcType = parser.evaluateParse(lineString[1]);
+           if (funcType == JMFunc) {
+
+               string theFunction;
+               vector<string> funcString = parser.returnParsedString();
+               vector<JM::Object*> parameters;
+
+               theFunction = funcString[0];
+
+               for (int i = 1; i < funcString.size(); i++)
+               {
+                   JMType paramType = parser.evaluateParse(funcString[i]);
+                   auto paramObject = this->handleInterpret(parser, paramType);
+                   if (paramObject != NULL)
+                       parameters.push_back(paramObject);
+               }
+
+               return methodCalls.evaluateArrayMethod(tempVar, theFunction, parameters);
+           }
+           else
+           {
+               std::cout<<"Method not properly called.\n";
+           }
+	   }
     }
 
     if (callerType == JMString)

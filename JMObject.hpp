@@ -3,6 +3,7 @@
 
 #include "JMTypes.h"
 #include <iostream>
+#include <string>
 
 namespace JM {
 class Object {
@@ -12,15 +13,19 @@ protected:
 	unsigned int id;
 	int scope = 0;
 public:
-	Object() {}
-	~Object() {}
+	Object();
+	~Object();
 
-	int getScope() { return this->scope; }
+	int getScope();
 
-	JMType getCurrentType() {return this->currentType; }
+	JMType getCurrentType();
+
+	virtual std::string toString() const;
 
 };
 };
+
+
 
 
 #endif

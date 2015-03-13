@@ -13,3 +13,17 @@ std::vector<JM::Object*> JM::Array::getCurrentValue()
 {
 	return this->objVec;
 }
+void JM::Array::append(JM::Object* obj)
+{
+	this->objVec.push_back(obj);
+}
+JM::Object* JM::Array::at(int n)
+{
+	if (n < this->objVec.size())
+		return this->objVec[n];
+	return NULL;
+}
+int JM::Array::getLength()
+{
+	return this->objVec.size();
+}

@@ -1,14 +1,7 @@
 #include "JMParser.hpp"
 #include <regex>
 #include <iostream>
-#include "JMArray.hpp"
 
-/**
-
-	Change function to instead split arguments by ', ' rather than ': '
-	so it will be easier to call methods within methods.
-
-*/
 
 JM::Parser::Parser()
 {

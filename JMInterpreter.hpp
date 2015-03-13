@@ -6,10 +6,8 @@
 #include <vector>
 #include <regex>
 #include <map>
-#include "JMObject.hpp"
+#include "JMFiles.hpp"
 #include "JMParser.hpp"
-#include "JMNum.hpp"
-#include "JMString.hpp"
 #include "JMMethodCall.hpp"
 
 using namespace std;

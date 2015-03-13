@@ -2,6 +2,7 @@
 #define JMNUM_HPP
 
 #include "JMObject.hpp"
+#include <string>
 
 namespace JM {
 
@@ -21,6 +22,8 @@ namespace JM {
             JM::Num* sub(double d);
             JM::Num* mul(double d);
             JM::Num* div(double d);
+            std::string toString() const;
+
 
         };
 

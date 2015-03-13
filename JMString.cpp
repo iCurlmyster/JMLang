@@ -36,3 +36,7 @@ JM::String* JM::String::concatenate(std::string s)
 {
     return new JM::String(this->currentValue + s);
 }
+std::string JM::String::toString() const
+{
+    return this->currentValue;
+}

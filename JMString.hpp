@@ -20,6 +20,8 @@ namespace JM {
         JM::String* concatenate(JM::String* obj);
         JM::String* concatenate(std::string s);
 
+        std::string toString() const;
+
     };
 
 };

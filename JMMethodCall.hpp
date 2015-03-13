@@ -1,9 +1,7 @@
 #ifndef JMMETHOD_CALL
 #define JMMETHOD_CALL
 
-#include "JMObject.hpp"
-#include "JMString.hpp"
-#include "JMNum.hpp"
+#include "JMFiles.hpp"
 #include "FileManager.hpp"
 #include <vector>
 #include <string>
@@ -19,6 +17,7 @@ namespace JM {
         ~MethodCall();
         JM::Object* evaluateStringMethod(JM::String* obj, std::string function, std::vector<JM::Object*>& params);
         JM::Object* evaluateNumMethod(JM::Num* obj, std::string function, std::vector<JM::Object*>& params);
+        JM::Object* evaluateArrayMethod(JM::Array* obj, std::string function, std::vector<JM::Object*>& params);
 
     };
 

@@ -15,8 +15,17 @@ namespace JM {
 		Array();
 		Array(std::vector<JM::Object*>& objVec);
 		~Array();
-		
+
 		std::vector<JM::Object*> getCurrentValue();
+		void append(JM::Object* obj);
+		JM::Object* at(int n);
+		int getLength();
+
+		template<typename F>
+		void mutationMap(F func)
+		{
+			// implement
+		}
 	};
 
 };

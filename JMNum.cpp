@@ -43,3 +43,7 @@ JM::Num* JM::Num::div(double d)
 {
     return new JM::Num(this->currentValue / d);
 }
+std::string JM::Num::toString() const
+{
+    return std::to_string(this->currentValue);
+}
