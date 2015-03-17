@@ -1,2 +1,2 @@
 arr = [1, "josh", 4, "Tiffany"]
-arr.writeToFile: "arrTest.txt": ", "
+[3, "G-Dog"].writeToFile: "arrTest.txt": ", "

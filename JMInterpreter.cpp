@@ -322,6 +322,33 @@ JM::Object* JM::Interpreter::method(JM::Parser& parser)
             std::cout<<"Method not properly called.\n";
         }
     }
+    else if (callerType == JMArray)
+    {
+        auto tempVar = (JM::Array*)this->handleInterpret(parser, callerType);
+        JMType funcType = parser.evaluateParse(lineString[1]);
+        if (funcType == JMFunc) {
+
+            string theFunction;
+            vector<string> funcString = parser.returnParsedString();
+            vector<JM::Object*> parameters;
+
+            theFunction = funcString[0];
+
+            for (int i = 1; i < funcString.size(); i++)
+            {
+                JMType paramType = parser.evaluateParse(funcString[i]);
+                auto paramObject = this->handleInterpret(parser, paramType);
+                if (paramObject != NULL)
+                    parameters.push_back(paramObject);
+            }
+
+            return methodCalls.evaluateArrayMethod(tempVar, theFunction, parameters);
+        }
+        else
+        {
+            std::cout<<"Method not properly called.\n";
+        }
+    }
 
     return NULL;
 
@@ -343,6 +370,17 @@ JM::Object* JM::Interpreter::handleInterpret(JM::Parser& parser,JMType type)
     {
         temp = variables[(parser.returnParsedString())[0]];
     }
-    else temp = new JM::String("");
+    else if (type == JMArray)
+    {
+        vector<string> printVec = parser.returnParsedString();
+		vector<JM::Object*> objVec;
+		for (int i = 0; i < printVec.size(); i++)
+		{
+			JMType i_type = parser.evaluateParse(printVec[i]);
+			objVec.push_back( this->handleInterpret(parser, i_type) );
+		}
+		return new JM::Array(objVec);
+    }
+
     return temp;
 }
