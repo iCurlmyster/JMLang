@@ -13,7 +13,8 @@ typedef enum JMType {
 	JMAssign,
 	JMVar,
 	JMMethod,
-	JMOperation
+	JMOperation,
+	JMDefFunc
 
 }JMType;
 

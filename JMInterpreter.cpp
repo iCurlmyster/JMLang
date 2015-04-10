@@ -16,7 +16,7 @@ JM::Interpreter::~Interpreter()
 * This method sees what type the initial parse is and sends it to it's respective
 * method to be dealt with in it's own needs.
 * Unless the initial parse is one of these types it skips the line.
-* @param &parser (JM::Parser)
+* @param parser (JM::Parser&)
 * @param type (JMType)
 */
 
@@ -44,7 +44,7 @@ void JM::Interpreter::interpret(JM::Parser& parser, JMType type)
 * It sends the assignment to the parser to figure out what the value is
 * and then assigns that value to the type object and stores it in a HashMap
 * with the variable name as it's key to be accessed later.
-* @param &parser (JM::Parser)
+* @param parser (JM::Parser&)
 */
 void JM::Interpreter::assign(JM::Parser& parser)
 {
@@ -73,17 +73,53 @@ void JM::Interpreter::assign(JM::Parser& parser)
             else
                 std::cout<<"Error with method call for assignment to "<<lineString[0]<<std::endl;
         }
-	else if (assignType == JMArray)
-	{
-		vector<string> printVec = parser.returnParsedString();
-		vector<JM::Object*> objVec;
-		for (int i = 0; i < printVec.size(); i++)
-		{
-			JMType i_type = parser.evaluateParse(printVec[i]);
-			objVec.push_back( this->handleInterpret(parser, i_type) );
-		}
-		variables[lineString[0]] = new JM::Array(objVec);
-	}
+	    else if (assignType == JMArray)
+	    {
+    		vector<string> printVec = parser.returnParsedString();
+    		vector<JM::Object*> objVec;
+    		for (int i = 0; i < printVec.size(); i++)
+    		{
+    			JMType i_type = parser.evaluateParse(printVec[i]);
+    			objVec.push_back( this->handleInterpret(parser, i_type) );
+    		}
+    		variables[lineString[0]] = new JM::Array(objVec);
+	    }
+        else if (assignType == JMDefFunc)
+        {
+            vector<string> printVec = parser.returnParsedString(); // get parsed string in vector
+            vector<string> params, procs; // create vectors to hold params and operations in func
+            bool fin = false, first = true; // bools to check for logic in while loop
+            int i = 0;// incrementor
+            while(!fin)
+            {
+
+                if (printVec[i] == ":") {first = false; ++i;}
+                if (i >= printVec.size() - 1) fin = true;
+
+                if (first)
+                {
+                    params.push_back(printVec[i]);
+                }
+                else
+                {
+                    procs.push_back(printVec[i]);
+                }
+
+                ++i;
+            }
+
+            auto new_func = new JM::DefFunc(); // create new DefFunc object
+            if (params.size() > 0) new_func->setParameters(params); // set params if there is any
+            if (procs.size() > 0) new_func->setOperations(procs); // set operations if any
+            else // if no operations are given then DefFunc is useless so don't store.
+            {
+                // this doesn't actually work right now... needs fixing..
+                cout<< "Warning: "<< lineString[0] <<" is an empty function. Was not stored."<<endl;
+                return;
+            }
+            // save variable
+            variables[lineString[0]] = new_func;
+        }
         else {
             cout<<"Not assignable.\n";
         }
@@ -99,7 +135,7 @@ void JM::Interpreter::assign(JM::Parser& parser)
 * This method handles a function call. It sets the parsed string
 * into a vector variable and decides which function it is, then takes action
 * on the passed parameters and responds to them accordingly.
-* @param &parser (JM::Parser)
+* @param parser (JM::Parser&)
 */
 void JM::Interpreter::func(JM::Parser& parser)
 {
@@ -126,6 +162,10 @@ void JM::Interpreter::func(JM::Parser& parser)
 	        {
 		        auto tempVal = ((JM::Array*)temp)->getCurrentValue();
 		        print(tempVal);
+            }
+            else if (temp->getCurrentType() == JMDefFunc)
+            {
+                print(temp->toString());
             }
         }
         else
@@ -155,6 +195,10 @@ void JM::Interpreter::func(JM::Parser& parser)
 		        auto tempVal = ((JM::Array*)temp)->getCurrentValue();
 		        println(tempVal);
             }
+            else if (temp->getCurrentType() == JMDefFunc)
+            {
+                println(temp->toString());
+            }
 
         }
         else
@@ -171,7 +215,7 @@ void JM::Interpreter::func(JM::Parser& parser)
 * to the JMMethodCall class to handle what type of object method it is and the parameters that
 * are passed to it. Once JMMethodCall handles the method it returns an object and then this
 * method returns that returned object. Cannot handle method within method calling yet.
-* @param &parser (JM::Parser)
+* @param parser (JM::Parser&)
 * @return JM::Object*
 */
 JM::Object* JM::Interpreter::method(JM::Parser& parser)
@@ -357,7 +401,7 @@ JM::Object* JM::Interpreter::method(JM::Parser& parser)
 /**
 * This method handles the interpreting of what the object type is and creates
 * an object for that type and returns it.
-* @param &parser (JM::Parser)
+* @param parser (JM::Parser&)
 * @param type (JMType)
 * @return JM::Object*
 */

@@ -5,5 +5,6 @@
 #include "JMString.hpp"
 #include "JMNum.hpp"
 #include "JMArray.hpp"
+#include "JMDefFunc.hpp"
 
 #endif
