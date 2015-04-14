@@ -18,6 +18,7 @@ namespace JM {
         JM::Object* evaluateStringMethod(JM::String* obj, std::string function, std::vector<JM::Object*>& params);
         JM::Object* evaluateNumMethod(JM::Num* obj, std::string function, std::vector<JM::Object*>& params);
         JM::Object* evaluateArrayMethod(JM::Array* obj, std::string function, std::vector<JM::Object*>& params);
+        JM::Object* evaluateDefFuncMethod(JM::DefFunc* obj);
 
     };
 

@@ -27,3 +27,14 @@ int JM::Array::getLength()
 {
 	return this->objVec.size();
 }
+
+
+std::string JM::Array::toString() const
+{
+	std::string str = "";
+	for (auto& temp: objVec)
+	{
+		str += temp->toString() + " ";
+	}
+	return str;
+}

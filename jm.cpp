@@ -9,7 +9,7 @@ using namespace std;
 int main(int argc, const char * argv[])
 {
 
-	if (regex_match(argv[1],regex("[\\w+\\s*]+\\.jm")))
+	if (regex_match(argv[1],regex(".+\\.jm")))
 	{
 		int lineNumber = 0;
 		JM::Parser parserObject;
@@ -28,7 +28,7 @@ int main(int argc, const char * argv[])
 				interpObj.interpret(parserObject,parseType);
 			if (isAnError)
 				cout<<"ERROR on line: "<<lineNumber<<endl;
-		
+
 		}
 		f.close();
 	}

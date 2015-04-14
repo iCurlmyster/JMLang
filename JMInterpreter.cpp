@@ -148,25 +148,7 @@ void JM::Interpreter::func(JM::Parser& parser)
 
         if (temp != NULL)
         {
-            if (temp->getCurrentType() == JMString)
-            {
-                auto tempVal = ((JM::String*)temp)->getCurrentValue();
-                print(tempVal);
-            }
-            else if (temp->getCurrentType() == JMNum)
-            {
-                auto tempVal = ((JM::Num*)temp)->getCurrentValue();
-                print(std::to_string(tempVal));
-            }
-	        else if (temp->getCurrentType() == JMArray)
-	        {
-		        auto tempVal = ((JM::Array*)temp)->getCurrentValue();
-		        print(tempVal);
-            }
-            else if (temp->getCurrentType() == JMDefFunc)
-            {
-                print(temp->toString());
-            }
+            print(temp->toString());
         }
         else
         {
@@ -180,26 +162,7 @@ void JM::Interpreter::func(JM::Parser& parser)
 
         if (temp != NULL)
         {
-            if (temp->getCurrentType() == JMString)
-            {
-                auto tempVal = ((JM::String*)temp)->getCurrentValue();
-                println(tempVal);
-            }
-            else if (temp->getCurrentType() == JMNum)
-            {
-                auto tempVal = ((JM::Num*)temp)->getCurrentValue();
-                println(std::to_string(tempVal));
-            }
-	        else if (temp->getCurrentType() == JMArray)
-	        {
-		        auto tempVal = ((JM::Array*)temp)->getCurrentValue();
-		        println(tempVal);
-            }
-            else if (temp->getCurrentType() == JMDefFunc)
-            {
-                println(temp->toString());
-            }
-
+            println(temp->toString());
         }
         else
         {

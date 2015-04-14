@@ -1,8 +1,9 @@
 #ifndef JMARRAY_HPP
 #define JMARRAY_HPP
 
-#include "JMObject.hpp"
+#include "JMFiles.hpp"
 #include <vector>
+#include <string>
 
 
 namespace JM {
@@ -26,6 +27,9 @@ namespace JM {
 		{
 			// implement
 		}
+
+
+		std::string toString() const;
 	};
 
 };
