@@ -168,8 +168,14 @@ void JM::Interpreter::func(JM::Parser& parser)
         {
             std::cout<<"Object was NULL\n";
         }
+    }
+    else if (variables.find(lineString[0]) != variables.end()) // check to make sure function is in variables
+    {
+
+
 
     }
+
 }
 
 /**

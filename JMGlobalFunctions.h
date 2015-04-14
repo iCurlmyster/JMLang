@@ -3,8 +3,6 @@
 
 #include <string>
 #include <iostream>
-#include <vector>
-#include "JMFiles.hpp"
 
 void print(std::string line)
 {
