@@ -191,3 +191,19 @@ JM::Object* JM::MethodCall::evaluateArrayMethod(JM::Array* obj, std::string func
     return NULL;
 
 }
+
+JM::Object* JM::MethodCall::evaluateDefFuncMethod(JM::DefFunc* obj, std::string function, std::vector<JM::Object*>& params)
+{
+    std::map<std::string, JM::Object*> func_vars;
+
+    if (function == "call")
+    {
+        
+    }
+    else
+    {
+        std::cout<<"Not a callable method on functions.\n";
+    }
+
+    return NULL;
+}

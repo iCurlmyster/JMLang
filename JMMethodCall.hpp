@@ -5,6 +5,7 @@
 #include "FileManager.hpp"
 #include <vector>
 #include <string>
+#include <map>
 
 namespace JM {
 
@@ -18,7 +19,7 @@ namespace JM {
         JM::Object* evaluateStringMethod(JM::String* obj, std::string function, std::vector<JM::Object*>& params);
         JM::Object* evaluateNumMethod(JM::Num* obj, std::string function, std::vector<JM::Object*>& params);
         JM::Object* evaluateArrayMethod(JM::Array* obj, std::string function, std::vector<JM::Object*>& params);
-        JM::Object* evaluateDefFuncMethod(JM::DefFunc* obj);
+        JM::Object* evaluateDefFuncMethod(JM::DefFunc* obj, std::string function, std::vector<JM::Object*>& params);
 
     };
 

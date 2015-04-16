@@ -86,39 +86,10 @@ void JM::Interpreter::assign(JM::Parser& parser)
 	    }
         else if (assignType == JMDefFunc)
         {
-            vector<string> printVec = parser.returnParsedString(); // get parsed string in vector
-            vector<string> params, procs; // create vectors to hold params and operations in func
-            bool fin = false, first = true; // bools to check for logic in while loop
-            int i = 0;// incrementor
-            while(!fin)
-            {
 
-                if (printVec[i] == ":") {first = false; ++i;}
-                if (i >= printVec.size() - 1) fin = true;
-
-                if (first)
-                {
-                    params.push_back(printVec[i]);
-                }
-                else
-                {
-                    procs.push_back(printVec[i]);
-                }
-
-                ++i;
-            }
-
-            auto new_func = new JM::DefFunc(); // create new DefFunc object
-            if (params.size() > 0) new_func->setParameters(params); // set params if there is any
-            if (procs.size() > 0) new_func->setOperations(procs); // set operations if any
-            else // if no operations are given then DefFunc is useless so don't store.
-            {
-                // this doesn't actually work right now... needs fixing..
-                cout<< "Warning: "<< lineString[0] <<" is an empty function. Was not stored."<<endl;
-                return;
-            }
-            // save variable
-            variables[lineString[0]] = new_func;
+            auto new_func = this->handleInterpret(parser,JMDefFunc);
+            if (new_func != NULL)
+                variables[lineString[0]] = new_func;
         }
         else {
             cout<<"Not assignable.\n";
@@ -168,12 +139,6 @@ void JM::Interpreter::func(JM::Parser& parser)
         {
             std::cout<<"Object was NULL\n";
         }
-    }
-    else if (variables.find(lineString[0]) != variables.end()) // check to make sure function is in variables
-    {
-
-
-
     }
 
 }
@@ -279,9 +244,37 @@ JM::Object* JM::Interpreter::method(JM::Parser& parser)
                std::cout<<"Method not properly called.\n";
            }
 	   }
-    }
+       else if (varType == JMDefFunc)
+       {
+           auto tempVar = (JM::DefFunc*)var;
+           JMType funcType = parser.evaluateParse(lineString[1]);
 
-    if (callerType == JMString)
+           if (funcType == JMFunc)
+           {
+               string theFunction;
+               vector<string> funcString = parser.returnParsedString();
+               vector<JM::Object*> parameters;
+
+               theFunction = funcString[0];
+
+               for (int i = 1; i < funcString.size(); i++)
+               {
+                   JMType paramType = parser.evaluateParse(funcString[i]);
+                   auto paramObject = this->handleInterpret(parser, paramType);
+                   if (paramObject != NULL)
+                       parameters.push_back(paramObject);
+               }
+
+               return methodCalls.evaluateDefFuncMethod(tempVar,theFunction,parameters);
+           }
+           else
+           {
+               std::cout << "Method not properly called.\n";
+           }
+       }
+   } // end of if for comparison with JMVar
+
+    else if (callerType == JMString)
     {
         JM::String * tempVar = (JM::String*)this->handleInterpret(parser, callerType);
         JMType funcType = parser.evaluateParse(lineString[1]);
@@ -362,6 +355,33 @@ JM::Object* JM::Interpreter::method(JM::Parser& parser)
             std::cout<<"Method not properly called.\n";
         }
     }
+    else if (callerType == JMDefFunc)
+    {
+        auto tempVar = (JM::DefFunc*) this->handleInterpret(parser, callerType);
+        JMType funcType = parser.evaluateParse(lineString[1]);
+        if (funcType == JMFunc) {
+
+            string theFunction;
+            vector<string> funcString = parser.returnParsedString();
+            vector<JM::Object*> parameters;
+
+            theFunction = funcString[0];
+
+            for (int i = 1; i < funcString.size(); i++)
+            {
+                JMType paramType = parser.evaluateParse(funcString[i]);
+                auto paramObject = this->handleInterpret(parser, paramType);
+                if (paramObject != NULL)
+                    parameters.push_back(paramObject);
+            }
+
+            return methodCalls.evaluateDefFuncMethod(tempVar, theFunction, parameters);
+        }
+        else
+        {
+            std::cout<<"Method not properly called.\n";
+        }
+    }
 
     return NULL;
 
@@ -393,6 +413,41 @@ JM::Object* JM::Interpreter::handleInterpret(JM::Parser& parser,JMType type)
 			objVec.push_back( this->handleInterpret(parser, i_type) );
 		}
 		return new JM::Array(objVec);
+    }
+    else if (type == JMDefFunc)
+    {
+        vector<string> printVec = parser.returnParsedString(); // get parsed string in vector
+        vector<string> params, procs; // create vectors to hold params and operations in func
+        bool fin = false, first = true; // bools to check for logic in while loop
+        int i = 0;// incrementor
+        while(!fin)
+        {
+
+            if (printVec[i] == ":") {first = false; ++i;}
+            if (i >= printVec.size() - 1) fin = true;
+
+            if (first)
+            {
+                params.push_back(printVec[i]);
+            }
+            else
+            {
+                procs.push_back(printVec[i]);
+            }
+
+            ++i;
+        }
+
+        auto new_func = new JM::DefFunc(); // create new DefFunc object
+        if (params.size() > 0) new_func->setParameters(params); // set params if there is any
+        if (procs.size() > 0) new_func->setOperations(procs); // set operations if any
+        else // if no operations are given then DefFunc is useless so don't store.
+        {
+            // this doesn't actually work right now... needs fixing..
+            cout<< "Warning: empty function. Was not stored."<<endl;
+            return NULL;
+        }
+        return new_func;
     }
 
     return temp;
