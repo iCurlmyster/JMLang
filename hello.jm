@@ -1,8 +1,12 @@
-arr = [1, "josh", 4, "Tiffany"]
-[3, "G-Dog"].writeToFile: "arrTest.txt": ", "
+//arr = [1, "josh", 4, "Tiffany"]
+//[3, "G-Dog"].writeToFile: "arrTest.txt": ", "
 
 
 // what I want the functions to look like
-var = { [x, y] : x.add: y }
+var = { [x, y] : sthing = x.add: y; sthing.-: 2 }
 
 println: var
+
+num = var.call: 2: 6
+
+println: num

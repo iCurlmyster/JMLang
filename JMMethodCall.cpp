@@ -1,6 +1,7 @@
 #include "JMMethodCall.hpp"
 
 #include <iostream>
+#include "JMInterpreter.hpp"
 
 JM::MethodCall::MethodCall() {
 
@@ -194,11 +195,26 @@ JM::Object* JM::MethodCall::evaluateArrayMethod(JM::Array* obj, std::string func
 
 JM::Object* JM::MethodCall::evaluateDefFuncMethod(JM::DefFunc* obj, std::string function, std::vector<JM::Object*>& params)
 {
-    std::map<std::string, JM::Object*> func_vars;
+    std::map<std::string, JM::Object*> func_vars; // create local map object to be used to carry params
+    auto obj_params = obj->getParameters(); // get obj parameters for function
+    auto obj_opera = obj->getOperations();  // get obj operations for function
+    for (int i = 0; i < obj_params.size(); i++)
+    {
+        func_vars[obj_params[i]] = params[i]; // set params to local map variables
+    }
+
+    JM::Interpreter func_interpret(&func_vars); // instantiate interpreter
+    JM::Parser func_parser;
 
     if (function == "call")
     {
-        
+        JM::Object* last_call = NULL;
+        for (int i = 0; i < obj_opera.size(); i++)
+        {
+            JMType func_type = func_parser.evaluateParse(obj_opera[i]);
+            last_call = func_interpret.interpret(func_parser, func_type);
+        }
+        return last_call;
     }
     else
     {

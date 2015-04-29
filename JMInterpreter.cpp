@@ -2,14 +2,14 @@
 #include "JMGlobalFunctions.h"
 #include "JMArray.hpp"
 
-JM::Interpreter::Interpreter()
+JM::Interpreter::Interpreter(map<string, JM::Object*> *variables)
 {
-
+    this->variables = variables;
 }
 
 JM::Interpreter::~Interpreter()
 {
-
+    this->variables = NULL;
 }
 
 /**
@@ -20,7 +20,7 @@ JM::Interpreter::~Interpreter()
 * @param type (JMType)
 */
 
-void JM::Interpreter::interpret(JM::Parser& parser, JMType type)
+JM::Object* JM::Interpreter::interpret(JM::Parser& parser, JMType type)
 {
 
     if (type == JMFunc)
@@ -33,11 +33,21 @@ void JM::Interpreter::interpret(JM::Parser& parser, JMType type)
     }
     else if (type == JMMethod)
     {
-        this->method(parser);
+        return this->method(parser);
     }
+
+    return NULL;
 
 }
 
+void JM::Interpreter::add_variable(std::string &str, JM::Object* obj)
+{
+    auto it = variables->find(str);
+    if (it == variables->end() )
+        variables->emplace(str, obj);
+    else
+        variables->at(str) = obj;
+}
 
 /**
 * This Method handles the assignment operations that need to be done.
@@ -57,19 +67,20 @@ void JM::Interpreter::assign(JM::Parser& parser)
         {
             vector<string> printVec = parser.returnParsedString();
             JM::String *strObj = new JM::String(printVec[0]);
-            variables[lineString[0]] = strObj;
+            this->add_variable(lineString[0], strObj);
+
         }
         else if (assignType == JMNum)
         {
             vector<string> printVec = parser.returnParsedString();
             JM::Num *numObj = new JM::Num(printVec[0]);
-            variables[lineString[0]] = numObj;
+            this->add_variable(lineString[0], numObj);
         }
         else if (assignType == JMMethod)
         {
             auto var = this->method(parser);
             if (var != NULL)
-                variables[lineString[0]] = var;
+                this->add_variable(lineString[0], var);
             else
                 std::cout<<"Error with method call for assignment to "<<lineString[0]<<std::endl;
         }
@@ -82,14 +93,14 @@ void JM::Interpreter::assign(JM::Parser& parser)
     			JMType i_type = parser.evaluateParse(printVec[i]);
     			objVec.push_back( this->handleInterpret(parser, i_type) );
     		}
-    		variables[lineString[0]] = new JM::Array(objVec);
+    		this->add_variable(lineString[0], new JM::Array(objVec) );
 	    }
         else if (assignType == JMDefFunc)
         {
 
             auto new_func = this->handleInterpret(parser,JMDefFunc);
             if (new_func != NULL)
-                variables[lineString[0]] = new_func;
+                this->add_variable(lineString[0], new_func);
         }
         else {
             cout<<"Not assignable.\n";
@@ -401,7 +412,7 @@ JM::Object* JM::Interpreter::handleInterpret(JM::Parser& parser,JMType type)
     else if (type == JMNum) temp = new JM::Num((parser.returnParsedString())[0]);
     else if (type == JMVar)
     {
-        temp = variables[(parser.returnParsedString())[0]];
+        temp = variables->at( (parser.returnParsedString())[0] );
     }
     else if (type == JMArray)
     {

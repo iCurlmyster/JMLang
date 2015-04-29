@@ -13,7 +13,8 @@ int main(int argc, const char * argv[])
 	{
 		int lineNumber = 0;
 		JM::Parser parserObject;
-		JM::Interpreter interpObj;
+		map<string, JM::Object*> *variables = new map<string, JM::Object*>();
+		JM::Interpreter interpObj(variables);
 		string line;
 		bool isAnError = false;
 		ifstream f(argv[1]);

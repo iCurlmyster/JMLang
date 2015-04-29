@@ -21,7 +21,7 @@ namespace JM {
         * Key: std::string
         * Value: JM::Object*
         */
-        map<string, JM::Object*> variables;
+        map<string, JM::Object*> *variables;
 
         /**
         * MethodCall object to handle method calling
@@ -30,11 +30,12 @@ namespace JM {
 
     public:
 
-        Interpreter();
+        Interpreter(map<string, JM::Object*> *variables);
         ~Interpreter();
 
-         void interpret(JM::Parser& parser, JMType type);
+         JM::Object* interpret(JM::Parser& parser, JMType type);
 
+         void add_variable(std::string &str, JM::Object* obj);
          void assign(JM::Parser& parser);
          void func(JM::Parser& parser);
          JM::Object* method(JM::Parser& parser);
