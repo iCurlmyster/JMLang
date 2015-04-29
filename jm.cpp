@@ -32,6 +32,7 @@ int main(int argc, const char * argv[])
 
 		}
 		f.close();
+		delete variables;
 	}
 	else
 	{
