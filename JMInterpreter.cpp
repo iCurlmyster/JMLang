@@ -412,7 +412,8 @@ JM::Object* JM::Interpreter::handleInterpret(JM::Parser& parser,JMType type)
     else if (type == JMNum) temp = new JM::Num((parser.returnParsedString())[0]);
     else if (type == JMVar)
     {
-        temp = variables->at( (parser.returnParsedString())[0] );
+        auto str = (parser.returnParsedString())[0];
+        temp = variables->at( str );
     }
     else if (type == JMArray)
     {
