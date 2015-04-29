@@ -3,7 +3,7 @@
 
 
 // what I want the functions to look like
-var = { [x, y] : sthing = x.add: y; sthing.-: 2 }
+var = { [x, y] : sthing = x.add: y; sthing = sthing.-: 2; sthing.*: 2 }
 
 println: var
 

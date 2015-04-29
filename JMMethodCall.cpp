@@ -60,7 +60,7 @@ JM::Object* JM::MethodCall::evaluateStringMethod(JM::String* obj, std::string fu
         else
            std::cout<<"Not a proper file named passed as argument.\n";
     }
-    else if (funciton == "val")
+    else if (function == "val")
     {
         return obj;
     }
@@ -131,7 +131,7 @@ JM::Object* JM::MethodCall::evaluateNumMethod(JM::Num* obj, std::string function
     {
         return new JM::String("JMNum");
     }
-    else if (funciton == "val")
+    else if (function == "val")
     {
         return obj;
     }
@@ -192,7 +192,7 @@ JM::Object* JM::MethodCall::evaluateArrayMethod(JM::Array* obj, std::string func
     {
         return new JM::String("JMArray");
     }
-    else if (funciton == "val")
+    else if (function == "val")
     {
         return obj;
     }
