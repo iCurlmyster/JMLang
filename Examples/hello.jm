@@ -12,6 +12,14 @@
 // println: num
 
 
-var = { [x, y] : x.add: y }.call: 2: 6
-
+// these get mutated
+var = [4, 5]
+num = var.val: |
+num.append: "Hello"
 println: var
+println: num
+
+
+// infinite loop
+//func = { [x] : println: "hello"; x.call: x }
+//func.call: func

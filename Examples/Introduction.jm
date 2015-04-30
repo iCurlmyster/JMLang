@@ -1,0 +1,175 @@
+// JMLang current features
+// this is a comment
+// currently JMLang only supports single line comments
+
+
+// hello world in JMLang
+print: "Hello World"
+// or for automatic carriage return
+println: "Hello World"
+
+// Dynamic typing
+// only support for Strings, Numbers, Arrays, and anonymous functions
+
+// creating a variable named 'num' and set to the value of '4'
+num = 4
+
+// each statement needs to be on it's own line
+str = "Hello"
+num = 2.0
+
+// All objects have methods and are called on by the '.' (dot) operator
+num.add: -4
+
+// to pass multiple arguments separate each argument by a ': ' right after it
+num.mul: 2: 6: 3
+// the space after the ':' is very important to remember otherwise it won't be recognized
+
+// objects are mostly immutable (except for most appending functions)
+// so to store a new value make a new variable or
+// set it to itself to point it to the new object
+num = num.div: 2
+
+// You can also call methods on literal objects too
+"Hello ".concat: "World!"
+
+// You can call methods inside assignment statements
+var = "Hello ".concat: "World!"
+//but you cannot call methods inside other method calls yet
+// so just set them to variables and pass them in the method call
+num = 2.+: 4
+var = var.concat: num
+
+
+//********  Numbers **********//
+
+// Numbers are stored as doubles in JMLang
+// so num = 4 is same as num = 4.0
+
+// does not support arithmetic except through method calls
+
+//Numbers
+4
+3.14
+-10
+
+// all number methods listed here
+
+// add: add numbers together
+4.add: 5: 7: 2: 4
+// +: alias to add:
+4.+: -5: 7: 10.05: 4
+// sub: subtract numbers
+4.sub: -5: 7: 10.05: 4
+// -: alias to sub:
+4.-: -5: 7.456: 10.05: 4
+// mul: mulitply numbers
+4.mul: -5: 7: 1: 4
+// *: alias to mul:
+4.*: -5: 7: 1: 4
+// div: divide numbers
+4.div: -5: 7: 1: 4
+// /: alias for div:
+4./: -5: 7: 1: 4
+// pow: number powered to another
+2.pow: 4
+// class: to get the name of the class of object (which is JMNum)
+5000.class: |
+// val: return a pointer to itself (this is mostly used to return itself at end of a function)
+// mutating functions will change original as well
+5000.val: |
+
+
+//********** Strings **********//
+
+// Strings
+"A string"
+// strings support the basic escape sequences that other languages support
+// except it does not support '\"' currently
+
+// String methods
+
+// concat: which concatenates strings together
+"This ".concat: "is": " a ": "Example.": 10
+
+// append: alias to concat:
+"This ".append: "is": " another ": "Example."
+
+// length: to get the length of the string
+"String Length".length: |
+
+// class: to get the name of the class of object (which is a JMString)
+"JMString Object".class: |
+
+// writeToFile: which takes the string and writes it to a file specified by you
+"Hello, World!".writeToFile: "Test.txt"
+
+// val: return a pointer to itself (this is mostly used to return itself at end of a function)
+// mutating functions will change original as well
+"JM".val: |
+
+//********** Arrays **********//
+
+// Arrays are declared
+[7, "Objects"]
+// spaces after commas are crucial
+
+// arrays can hold any object in the language and hold multiple types
+// of objects at the same time
+
+// Array methods
+
+// at: to get the object at the specified position in the array
+[1, 2].at: 0
+
+// append: add objects to the array, this function mutates the original
+["Object"].append: "Another Object": 5: 90000
+
+// push: alias to append:
+["Object"].push: "Another Object": 5: 90000
+
+// writeToFile: write the array to a file. By defualt it writes each element
+// separated by a space ' ' unless specified otherwise
+["An Important sentence", 4, 1.00005].writeToFile: "File.txt": ", "
+
+// length: get the number of elements inside the array
+[1, 2, 3, 4, 5].length: |
+
+// class: to get the name of the class of object (which is a JMArray)
+[4, 3].class: |
+
+// val: return a pointer to itself (this is mostly used to return itself at end of a function)
+// mutating functions will change original as well
+["Language"].val: |
+
+
+
+//********* Anonymous Functions *********//
+
+// Anonymous functions are declared
+{ [x, y] : num = x.+: y; println: num }
+// [x, y] are the variables that are passed into the function
+// the ' : ' (spaces are crucial) tells the interpreter that the next thing is
+// the declaration of the function
+// multiple methods are separated by '; ' (space is crucial)
+
+// you can set a function to a variable
+func = { [] : println: "Hello, function." }
+// then call it like so
+
+// use a '|' at end of methods that take no parameters so they work right
+// never use it for methods that do take parameters though
+func.call: |
+
+// you can also call on an anonymous function directly to get a result right then
+
+num = { [x, y] : x.add: y }.call: 5: 3
+
+// functions only have access to the arguments that are passed and the local
+// variables it creates inside itself.
+// It has no access to outside variables
+
+// functions automatically return the object from the last method call inside itself
+
+// functions can handle recursion but since the language does not support
+// if statements at the moment it will just be an infinite loop

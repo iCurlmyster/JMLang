@@ -1,6 +1,7 @@
 #include "JMMethodCall.hpp"
 
 #include <iostream>
+#include <cmath>
 #include "JMInterpreter.hpp"
 
 JM::MethodCall::MethodCall() {
@@ -125,7 +126,10 @@ JM::Object* JM::MethodCall::evaluateNumMethod(JM::Num* obj, std::string function
     }
     else if (function == "pow")
     {
-
+        double temp = obj->getCurrentValue();
+        if (params[0]->getCurrentType() == JMNum)
+            temp = std::pow(temp, ((JM::Num*)params[0])->getCurrentValue());
+        return new JM::Num(temp);
     }
     else if (function == "class")
     {
